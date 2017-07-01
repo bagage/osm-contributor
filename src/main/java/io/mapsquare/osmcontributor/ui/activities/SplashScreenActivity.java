@@ -19,11 +19,14 @@
 package io.mapsquare.osmcontributor.ui.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
@@ -132,6 +135,29 @@ public class SplashScreenActivity extends AppCompatActivity {
                 bus.getStickyEvent(LoginInitializedEvent.class) != null;
     }
 
+    private Runnable showUpdate = new Runnable() {
+        public void run() {
+            new AlertDialog.Builder(SplashScreenActivity.this)
+                    .setIcon(R.drawable.icon)
+                    .setTitle(R.string.updateAvailableDialogTitle)
+                    .setMessage(R.string.updateAvailableDialogMessage)
+                    .setNegativeButton(R.string.addValueDialogCancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startMapActivity();
+                        }
+                    })
+                    .setPositiveButton(R.string.updateAvailableDialogInstall, new DialogInterface
+                            .OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=io.mapsquare.osmcontributor"));
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
+        }
+    };
+
     /**
      * Remove all the initialization finished sticky events and start the MapActivity.
      */
@@ -158,7 +184,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void startMapActivityIfNeeded() {
         if (shouldStartMapActivity()) {
-            startMapActivity();
+            if (showUpdate != null) {
+                runOnUiThread(showUpdate);
+                showUpdate = null;
+            } else {
+                startMapActivity();
+            }
         }
     }
 
@@ -308,5 +339,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         if (loginDialogFragment != null) {
             loginDialogFragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startMapActivityIfNeeded();
     }
 }

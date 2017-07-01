@@ -252,4 +252,7 @@ Il est conseillé d\'avoir une connexion Wifi pendant le téléchargement.\n\nVo
   <string name="offline_step2">Zoomez pour sélectionner une zone</string>
   <string name="offline_step1">Cliquer pour sélectionner une région</string>
   <string name="offline_step4">Vos régions apparaitront ici.</string>
+  <string name="updateAvailableDialogTitle">Mise à jour disponible</string>
+  <string name="updateAvailableDialogMessage">Une nouvelle version est disponible sur le Play Store. La version utilisée ne sera plus mise à jour.</string>
+  <string name="updateAvailableDialogInstall">Installer</string>
 </resources>

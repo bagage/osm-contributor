@@ -312,4 +312,7 @@
     <string name="offline_step2">Zoom to select a zone</string>
     <string name="offline_step1">Click to select a region</string>
     <string name="offline_step4">Your areas will appear here</string>
+    <string name="updateAvailableDialogTitle">Update available</string>
+    <string name="updateAvailableDialogMessage">A new version is available on Play Store. This version will not be updated anymore.</string>
+    <string name="updateAvailableDialogInstall">Install now</string>
 </resources>
